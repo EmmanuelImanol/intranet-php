@@ -269,8 +269,12 @@
 .field-group input:focus,
 .field-group select:focus { border-color: rgba(99,102,241,0.5); }
 .field-group select option {
-  background: var(--surface);
-  color: var(--text);
+  background: #1a1a2e;
+  color: #ffffff;
+}
+html.light .field-group select option {
+  background: #ffffff;
+  color: #0f0f1a;
 }
 
 /* File drop */
