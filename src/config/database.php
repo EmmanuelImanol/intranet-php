@@ -2,9 +2,9 @@
 
 define('DB_HOST', '127.0.0.1');
 define('DB_PORT', '3306');
-define('DB_NAME', 'intranet');
-define('DB_USER', 'intranet_user');
-define('DB_PASS', 'password123');
+define('DB_NAME', 'u811853349_intranet');
+define('DB_USER', 'u811853349_intranet');
+define('DB_PASS', 'in-.$t#r4Net?');
 
 function connectDB() {
   try {
