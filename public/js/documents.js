@@ -3,10 +3,16 @@ const modalOverlay = document.getElementById('modalOverlay');
 const btnOpen      = document.getElementById('btnUpload');
 const btnClose     = document.getElementById('btnCloseModal');
 
-if (btnOpen)      btnOpen.addEventListener('click', () => modalOverlay.classList.add('open'));
-if (btnClose)     btnClose.addEventListener('click', () => modalOverlay.classList.remove('open'));
+function openModal() { if (modalOverlay) modalOverlay.classList.add('open'); }
+function closeModal() { if (modalOverlay) modalOverlay.classList.remove('open'); }
+
+if (btnOpen) {
+  btnOpen.addEventListener('click', openModal);
+  btnOpen.addEventListener('touchend', function(e) { e.preventDefault(); openModal(); });
+}
+if (btnClose) btnClose.addEventListener('click', closeModal);
 if (modalOverlay) modalOverlay.addEventListener('click', (e) => {
-  if (e.target === modalOverlay) modalOverlay.classList.remove('open');
+  if (e.target === modalOverlay) closeModal();
 });
 
 // ── File input display ──
@@ -21,16 +27,13 @@ if (fileInput) fileInput.addEventListener('change', () => {
 });
 
 if (fileDrop) {
-  fileDrop.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    fileDrop.classList.add('dragover');
-  });
+  fileDrop.addEventListener('dragover', (e) => { e.preventDefault(); fileDrop.classList.add('dragover'); });
   fileDrop.addEventListener('dragleave', () => fileDrop.classList.remove('dragover'));
   fileDrop.addEventListener('drop', (e) => {
     e.preventDefault();
     fileDrop.classList.remove('dragover');
     const files = e.dataTransfer.files;
-    if (files.length > 0) {
+    if (files.length > 0 && fileInput) {
       fileInput.files = files;
       fileName.textContent = '✓ ' + files[0].name;
     }
@@ -70,8 +73,7 @@ function openPreview(filePath, docName) {
   } else {
     previewBody.innerHTML = `
       <div class="preview-placeholder">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-stroke-width="1.2">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
         </svg>
