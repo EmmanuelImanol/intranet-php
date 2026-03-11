@@ -1,6 +1,6 @@
 // ── Upload modal ──
 const modalOverlay = document.getElementById('modalOverlay');
-const btnOpen      = document.getElementById('btnOpenModal');
+const btnOpen      = document.getElementById('btnUpload');
 const btnClose     = document.getElementById('btnCloseModal');
 
 if (btnOpen)      btnOpen.addEventListener('click', () => modalOverlay.classList.add('open'));
