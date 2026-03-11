@@ -1,2 +1,18 @@
+# Archivos subidos por usuarios
 public/uploads/*
 !public/uploads/.gitkeep
+
+# Configuración local
+src/config/database.php
+
+# Logs
+*.log
+error_log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
