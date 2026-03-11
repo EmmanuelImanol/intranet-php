@@ -24,8 +24,10 @@
   border-radius: 8px;
   font-size: 0.875rem;
 }
-.alert-error   { background: rgba(239,68,68,0.1);  border: 1px solid rgba(239,68,68,0.25);  color: #fca5a5; }
-.alert-success { background: rgba(20,184,166,0.1); border: 1px solid rgba(20,184,166,0.25); color: #5eead4; }
+.alert-error   { background: rgba(239,68,68,0.1);  border: 1px solid rgba(239,68,68,0.25);  color: 
+#fca5a5; }
+.alert-success { background: rgba(20,184,166,0.1); border: 1px solid rgba(20,184,166,0.25); color: 
+#5eead4; }
 
 /* Toolbar */
 .toolbar {
@@ -42,7 +44,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255,255,255,0.04);
+  background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.5rem 0.85rem;
@@ -88,11 +90,12 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .doc-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
   font-size: 0.875rem;
 }
@@ -159,9 +162,12 @@
   font-size: 0.75rem;
   font-weight: 500;
 }
-.role-admin      { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
-.role-supervisor { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
-.role-empleado   { background: rgba(99,102,241,0.12); color: #818cf8; border: 1px solid rgba(99,102,241,0.25); }
+.role-admin      { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid 
+rgba(239,68,68,0.25); }
+.role-supervisor { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid 
+rgba(245,158,11,0.25); }
+.role-empleado   { background: rgba(99,102,241,0.12); color: #818cf8; border: 1px solid 
+rgba(99,102,241,0.25); }
 
 .text-muted { color: var(--text-muted); }
 
@@ -299,14 +305,21 @@
 }
 .toggle-pass:hover { color: var(--text); }
 
-@media (max-width: 768px) {
-  /* Table */
-  .table-wrapper { margin: 1rem; overflow-x: auto; }
-  .doc-table     { min-width: 480px; }
-  .doc-table th:nth-child(4),
-  .doc-table td:nth-child(4),
+@media (max-width: 900px) {
+  /* Tablet: ocultar Área (col 3) y Fecha (col 5) */
+  .doc-table th:nth-child(3),
+  .doc-table td:nth-child(3),
   .doc-table th:nth-child(5),
   .doc-table td:nth-child(5) { display: none; }
+  .doc-table { min-width: 480px; }
+}
+
+@media (max-width: 768px) {
+  /* Table */
+  .table-wrapper { margin: 1rem; }
+  .doc-table th:nth-child(4),
+  .doc-table td:nth-child(4) { display: none; }
+  .doc-table { min-width: 360px; }
 
   /* Toolbar */
   .toolbar { padding: 1rem 1rem 0; flex-direction: column; align-items: stretch; gap: 0.75rem; }
@@ -317,8 +330,15 @@
 
   /* Modal */
   .form-row { grid-template-columns: 1fr; }
-  .modal    { padding: 1.25rem; max-height: 90vh; overflow-y: auto; }
+  .modal    { padding: 1.25rem; max-height: 90vh; overflow-y: auto; max-width: 95vw; }
   .modal-sm { max-width: 90vw; }
+}
+
+@media (max-width: 480px) {
+  /* Mobile: solo nombre y acciones */
+  .doc-table th:nth-child(2),
+  .doc-table td:nth-child(2) { display: none; }
+  .doc-table { min-width: unset; width: 100%; }
 }
 
 /* Error inside modal */
@@ -343,11 +363,16 @@
   letter-spacing: 0.05em;
   display: inline-block;
 }
-.area-general     { background: rgba(99,102,241,0.12);  color: #818cf8; border: 1px solid rgba(99,102,241,0.25); }
-.area-rrhh        { background: rgba(236,72,153,0.12);  color: #f472b6; border: 1px solid rgba(236,72,153,0.25); }
-.area-it          { background: rgba(20,184,166,0.12);  color: #2dd4bf; border: 1px solid rgba(20,184,166,0.25); }
-.area-finanzas    { background: rgba(245,158,11,0.12);  color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
-.area-operaciones { background: rgba(59,130,246,0.12);  color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
+.area-general     { background: rgba(99,102,241,0.12);  color: #818cf8; border: 1px solid 
+rgba(99,102,241,0.25); }
+.area-rrhh        { background: rgba(236,72,153,0.12);  color: #f472b6; border: 1px solid 
+rgba(236,72,153,0.25); }
+.area-it          { background: rgba(20,184,166,0.12);  color: #2dd4bf; border: 1px solid 
+rgba(20,184,166,0.25); }
+.area-finanzas    { background: rgba(245,158,11,0.12);  color: #fbbf24; border: 1px solid 
+rgba(245,158,11,0.25); }
+.area-operaciones { background: rgba(59,130,246,0.12);  color: #60a5fa; border: 1px solid 
+rgba(59,130,246,0.25); }
 
 /* ── Area badges ── */
 .area-badge {
@@ -357,17 +382,28 @@
   font-weight: 600;
   letter-spacing: 0.05em;
 }
-.area-administracion_finanzas { background: rgba(99,102,241,0.12);  color: #818cf8; border: 1px solid rgba(99,102,241,0.25); }
-.area-comercial               { background: rgba(236,72,153,0.12);  color: #f472b6; border: 1px solid rgba(236,72,153,0.25); }
-.area-controller              { background: rgba(20,184,166,0.12);  color: #2dd4bf; border: 1px solid rgba(20,184,166,0.25); }
-.area-culinary_innovacion     { background: rgba(245,158,11,0.12);  color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
-.area-direccion_general       { background: rgba(239,68,68,0.12);   color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
-.area-finanzas                { background: rgba(16,185,129,0.12);  color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
-.area-fiscal                  { background: rgba(59,130,246,0.12);  color: #60a5fa; border: 1px solid rgba(59,130,246,0.25); }
-.area-mantenimiento           { background: rgba(161,98,7,0.15);    color: #d97706; border: 1px solid rgba(161,98,7,0.3); }
-.area-recursos_humanos        { background: rgba(168,85,247,0.12);  color: #c084fc; border: 1px solid rgba(168,85,247,0.25); }
-.area-restaurantes            { background: rgba(236,72,153,0.12);  color: #f472b6; border: 1px solid rgba(236,72,153,0.25); }
-.area-operaciones             { background: rgba(14,165,233,0.12);  color: #38bdf8; border: 1px solid rgba(14,165,233,0.25); }
+.area-administracion_finanzas { background: rgba(99,102,241,0.12);  color: #818cf8; border: 1px 
+solid rgba(99,102,241,0.25); }
+.area-comercial               { background: rgba(236,72,153,0.12);  color: #f472b6; border: 1px 
+solid rgba(236,72,153,0.25); }
+.area-controller              { background: rgba(20,184,166,0.12);  color: #2dd4bf; border: 1px 
+solid rgba(20,184,166,0.25); }
+.area-culinary_innovacion     { background: rgba(245,158,11,0.12);  color: #fbbf24; border: 1px 
+solid rgba(245,158,11,0.25); }
+.area-direccion_general       { background: rgba(239,68,68,0.12);   color: #f87171; border: 1px 
+solid rgba(239,68,68,0.25); }
+.area-finanzas                { background: rgba(16,185,129,0.12);  color: #34d399; border: 1px 
+solid rgba(16,185,129,0.25); }
+.area-fiscal                  { background: rgba(59,130,246,0.12);  color: #60a5fa; border: 1px 
+solid rgba(59,130,246,0.25); }
+.area-mantenimiento           { background: rgba(161,98,7,0.15);    color: #d97706; border: 1px 
+solid rgba(161,98,7,0.3); }
+.area-recursos_humanos        { background: rgba(168,85,247,0.12);  color: #c084fc; border: 1px 
+solid rgba(168,85,247,0.25); }
+.area-restaurantes            { background: rgba(236,72,153,0.12);  color: #f472b6; border: 1px 
+solid rgba(236,72,153,0.25); }
+.area-operaciones             { background: rgba(14,165,233,0.12);  color: #38bdf8; border: 1px 
+solid rgba(14,165,233,0.25); }
 
 /* ── Delete confirmation modal ── */
 .modal-sm {
