@@ -364,7 +364,7 @@
 @media (max-width: 768px) {
   /* Layout */
   .documents-layout  { flex-direction: column; }
-  .table-wrapper     { margin: 1rem; overflow-x: auto; overflow-y: auto; max-height: 60vh; min-height: 200px; }
+  .table-wrapper     { margin: 1rem; overflow-x: auto; }
   .doc-preview-panel { width: 100%; max-height: 340px; border-left: none; border-top: 1px solid var(--border); }
 
   /* Toolbar */
@@ -373,19 +373,31 @@
   .search-wrapper input { width: 100%; }
   .alert { margin: 1rem 1rem 0; }
 
-  /* Table: hide less important columns */
+  /* Ocultar Tamaño y Subido por */
   .doc-table th:nth-child(3),
   .doc-table td:nth-child(3),
   .doc-table th:nth-child(4),
   .doc-table td:nth-child(4) { display: none; }
 
-  /* Scrollable table */
-  .doc-table { min-width: 420px; }
+  .doc-table { min-width: unset; width: 100%; }
+
+  /* Reducir padding en celdas */
+  .doc-table th,
+  .doc-table td { padding: 0.75rem 0.75rem; }
 }
 
 @media (max-width: 480px) {
+  /* En pantallas muy pequeñas ocultar también Área y Fecha */
+  .doc-table th:nth-child(2),
+  .doc-table td:nth-child(2),
   .doc-table th:nth-child(5),
   .doc-table td:nth-child(5) { display: none; }
+
+  .doc-table th,
+  .doc-table td { padding: 0.65rem 0.6rem; }
+
+  .doc-name-cell { gap: 0.4rem; }
+  .doc-type-icon { font-size: 0.6rem; }
 }
 
 /* ── Clickable rows ── */
