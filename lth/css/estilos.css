@@ -1,0 +1,61 @@
+:root {
+    --color-verde: #027313;
+    --color-rojo: #F20505;
+}
+
+body {
+    background-image: url(../img/Fondo.jpg);
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.d-block { /* Hace a los botones dentro de la tarjeta mas alargados */
+    display: block;
+}
+.mb-2 { /* Le da un margen hacia abajo de 10 pixeles */
+    margin-bottom: 10px;
+}
+.mb-2:last-child { /* Elimina el margen al último elemento */
+    margin-bottom: 0;
+}
+.mb-4 {
+    margin-bottom: 30px;
+}
+.mt-5 {
+    margin-top: 1.5rem;
+}
+.card { /* Hace los bordes puntiagudos */
+    border-radius: 0;
+}
+.border-red {
+    border-style: solid;
+    border-color: var(--color-rojo);
+}
+.justify-content-center {
+    display: grid;
+    justify-content: center;
+}
+.verde { /* Color de los botones */
+    background-color: var(--color-verde);
+}
+.btn-large i { /* Le quita el margen al icono de facebook y whatsapp */
+    margin-right: 0;
+}
+.d-none { /* Oculta el contenido */
+    display: none;
+}
+.row { /*Le elimina el margen hacia abajo del row*/
+    margin-bottom: 0;
+}
+.precio { /* Color de los precios */
+    color: var(--color-verde);
+    font-weight: bold;
+}
+.collapsible-body { 
+    padding: .5rem;
+}
+.collapsible-header:hover {
+    color: var(--color-verde);
+    background-color: #fff;
+}

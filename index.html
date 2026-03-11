@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideaslici | Ideas & Tecnología</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+        }
+
+        .glass-nav {
+            background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(to right, #020617 0%, rgba(2, 6, 23, 0.6) 50%, transparent 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #60a5fa, #67e8f9, #818cf8);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            /* Fallback */
+            display: inline-block;
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="text-white overflow-x-hidden">
+
+    <!-- Botón WhatsApp -->
+    <a href="https://wa.me/525548389506?text=Hola%20Ideaslici%2C%20me%20gustaría%20recibir%20más%20información."
+        target="_blank"
+        class="fixed bottom-6 right-6 z-[100] bg-[#25D366] text-white p-4 rounded-full shadow-[0_0_20px_rgba(37,211,102,0.6)] hover:scale-110 active:scale-95 transition-all animate-bounce">
+        <i data-lucide="message-circle" class="w-8 h-8"></i>
+    </a>
+
+    <!-- Navegación -->
+    <nav id="navbar" class="fixed w-full z-[90] transition-all duration-500 py-6">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer"
+                onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="relative w-10 h-10 flex items-center justify-center">
+                    <i data-lucide="hexagon" class="w-10 h-10 text-blue-500 fill-blue-500/10"></i>
+                    <span class="absolute font-black text-white text-[10px]">IL</span>
+                </div>
+                <div class="flex flex-col text-left">
+                    <span class="text-xl font-black tracking-tighter leading-none">IDEASLICI</span>
+                    <span class="text-[9px] tracking-[0.15em] text-blue-400 font-bold uppercase mt-1 italic">Ideas &
+                        Tecnología</span>
+                </div>
+            </div>
+
+            <div class="hidden lg:flex space-x-8 items-center font-bold text-[10px] uppercase tracking-widest">
+                <a href="#quienes-somos" class="hover:text-blue-400 transition-colors text-slate-300">Quiénes somos</a>
+                <a href="#consultoria" class="hover:text-blue-400 transition-colors text-slate-300">Consultoría</a>
+                <a href="#pos" class="hover:text-blue-400 transition-colors text-slate-300">Puntos de venta</a>
+                <a href="#hardware" class="hover:text-blue-400 transition-colors text-slate-300">Hardware</a>
+                <button onclick="location.href='https://wa.me/525548389506'"
+                    class="bg-blue-600 hover:bg-blue-500 px-6 py-2.5 rounded-xl transition shadow-lg shadow-blue-600/20 text-white font-black">
+                    CONTACTO
+                </button>
+            </div>
+
+            <button class="lg:hidden text-white" id="menu-btn">
+                <i data-lucide="menu" id="menu-icon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Menú Móvil -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-[#020617] z-[100] transition-transform duration-500 p-8 flex flex-col space-y-8 translate-x-full lg:hidden">
+        <div class="flex justify-between items-center mb-8">
+            <span class="font-black italic text-xl">IDEASLICI</span>
+            <i data-lucide="x" class="w-8 h-8 cursor-pointer" id="close-btn"></i>
+        </div>
+        <a href="#quienes-somos"
+            class="mobile-link text-2xl font-bold italic uppercase tracking-widest border-b border-white/5 pb-2 text-slate-300">Quiénes
+            somos</a>
+        <a href="#consultoria"
+            class="mobile-link text-2xl font-bold italic uppercase tracking-widest border-b border-white/5 pb-2 text-slate-300">Consultoría</a>
+        <a href="#pos"
+            class="mobile-link text-2xl font-bold italic uppercase tracking-widest border-b border-white/5 pb-2 text-slate-300">Puntos
+            de venta</a>
+        <a href="#hardware"
+            class="mobile-link text-2xl font-bold italic uppercase tracking-widest border-b border-white/5 pb-2 text-slate-300">Hardware</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden bg-slate-900">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.pexels.com/photos/12935093/pexels-photo-12935093.jpeg?_gl=1*rctg38*_ga*MTcxMTQ2NTAwNi4xNzY5MTA2NDUz*_ga_8JE65Q40S6*czE3NjkxMDY0NTIkbzEkZzEkdDE3NjkxMDY5NzgkajU5JGwwJGgw"
+                alt="Punto de venta" class="w-full h-full object-cover brightness-[0.4]">
+            <div class="absolute inset-0 hero-gradient"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 w-full text-center lg:text-left mt-10">
+            <div class="max-w-4xl">
+                <h1 class="text-5xl md:text-8xl font-black leading-[1.1] tracking-tighter mb-8 drop-shadow-2xl">
+                    Tecnología que <br>
+                    <span class="text-gradient italic">ordena tu éxito.</span>
+                </h1>
+                <p
+                    class="text-xl md:text-2xl text-slate-100 mb-10 max-w-2xl leading-relaxed font-semibold mx-auto lg:mx-0">
+                    Controla tu negocio desde la palma de tu mano. Consultoría experta y puntos de venta móviles
+                    diseñados para la eficiencia real.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
+                    <a href="https://wa.me/525548389506"
+                        class="bg-blue-600 hover:bg-blue-500 text-white px-10 py-5 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-blue-600/40 flex items-center justify-center gap-2">
+                        Solicitar Demo <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiénes Somos -->
+    <section id="quienes-somos" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+            <div class="relative group">
+                <div class="absolute -inset-4 bg-blue-500/10 blur-3xl"></div>
+                <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?auto=format&fit=crop&q=80&w=1000"
+                    class="relative rounded-[3rem] shadow-2xl border border-white/10 aspect-video lg:aspect-square object-cover">
+            </div>
+            <div class="space-y-8">
+                <h2 class="text-blue-500 font-black text-xs uppercase tracking-[0.5em]">Quiénes somos</h2>
+                <h3 class="text-4xl md:text-5xl font-bold italic">Estrategas detrás de tu operación.</h3>
+                <p class="text-slate-400 text-lg leading-relaxed">
+                    En <span class="text-white font-bold">IDEASLICI</span>, transformamos el caos operativo en
+                    rentabilidad. Somos especialistas en consultoría administrativa y herramientas tecnológicas.
+                </p>
+                <div class="flex items-center space-x-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                    <div class="p-3 bg-blue-600/20 rounded-xl text-blue-400">
+                        <i data-lucide="briefcase"></i>
+                    </div>
+                    <div>
+                        <p class="text-white font-bold italic">Consultoría Activa</p>
+                        <p class="text-xs text-slate-500 uppercase font-black italic">Acompañamiento estratégico</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultoría -->
+    <section id="consultoria" class="py-32 px-6 bg-slate-900/10 border-y border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-blue-400 font-black text-xs uppercase tracking-[0.5em] mb-4">Servicios</h2>
+                <h3 class="text-5xl font-bold italic">Inteligencia y Control</h3>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="services-grid">
+                <!-- Se llenará con JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Puntos de Venta -->
+    <section id="pos" class="py-32 px-6">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-8">
+                <h2 class="text-blue-500 font-black text-xs uppercase tracking-[0.5em]">Sistemas POS</h2>
+                <h3 class="text-4xl md:text-5xl font-bold italic">Gastronomía & Retail.</h3>
+                <p class="text-slate-400 text-lg italic">Soluciones escalables para vender desde cualquier lugar.</p>
+                <div class="space-y-4">
+                    <div class="p-6 rounded-2xl bg-white/5 border border-blue-500/30 flex space-x-4">
+                        <i data-lucide="utensils-crossed" class="text-blue-400"></i>
+                        <div>
+                            <h5 class="font-bold italic">Gastronomía</h5>
+                            <p class="text-slate-500 text-sm">Comandas rápidas y control de mesas.</p>
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-2xl bg-white/5 border border-cyan-500/30 flex space-x-4">
+                        <i data-lucide="tags" class="text-cyan-400"></i>
+                        <div>
+                            <h5 class="font-bold italic">Retail</h5>
+                            <p class="text-slate-500 text-sm">Gestión de inventarios masivos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <img src="https://images.pexels.com/photos/4921255/pexels-photo-4921255.jpeg?_gl=1*6yk0bh*_ga*MTcxMTQ2NTAwNi4xNzY5MTA2NDUz*_ga_8JE65Q40S6*czE3NjkxMDY0NTIkbzEkZzEkdDE3NjkxMDY2MjIkajE4JGwwJGgw"
+                    class="rounded-3xl border border-white/10 aspect-square object-cover mt-8">
+                <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=400"
+                    class="rounded-3xl border border-white/10 aspect-square object-cover mt-8">
+            </div>
+        </div>
+    </section>
+
+    <!-- Hardware Section: Enfoque Movilidad y KDS -->
+    <section id="hardware" class="py-32 px-6 bg-slate-900/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-blue-500 font-black text-xs uppercase tracking-[0.5em] mb-4">Ecosistema Hardware
+                    </h2>
+                    <h3 class="text-4xl md:text-5xl font-bold italic leading-tight">Infraestructura <br><span
+                            class="text-gradient">totalmente inalámbrica.</span></h3>
+                </div>
+                <p class="text-slate-400 max-w-sm italic">Eliminamos el cableado innecesario con tecnología WiFi de alta
+                    fidelidad para una operación fluida.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tabletas -->
+                <div
+                    class="p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-all group">
+                    <i data-lucide="tablet"
+                        class="text-blue-400 mb-6 w-8 h-8 group-hover:rotate-12 transition-transform"></i>
+                    <h4 class="font-bold text-xl mb-2 italic">Movilidad Total</h4>
+                    <p class="text-slate-500 text-sm">Tabletas industriales para meseros. Levanta pedidos al pie de la
+                        mesa con sincronización inmediata.</p>
+                </div>
+                <!-- Redes WiFi -->
+                <div
+                    class="p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-all group">
+                    <i data-lucide="wifi"
+                        class="text-cyan-400 mb-6 w-8 h-8 group-hover:scale-110 transition-transform"></i>
+                    <h4 class="font-bold text-xl mb-2 italic">Redes Optimizadas</h4>
+                    <p class="text-slate-500 text-sm">Instalación de Access Points profesionales para garantizar 0
+                        desconexiones en tu punto de venta.</p>
+                </div>
+                <!-- Impresoras WiFi -->
+                <div
+                    class="p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-all group">
+                    <i data-lucide="printer"
+                        class="text-indigo-400 mb-6 w-8 h-8 group-hover:-translate-y-2 transition-transform"></i>
+                    <h4 class="font-bold text-xl mb-2 italic">Impresión Inalámbrica</h4>
+                    <p class="text-slate-500 text-sm">Tickets y comandas WiFi. Ubica tus impresoras donde quieras sin
+                        depender de cables de red.</p>
+                </div>
+                <!-- Monitores KDS -->
+                <div
+                    class="p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-all group">
+                    <i data-lucide="tv-2" class="text-purple-400 mb-6 w-8 h-8 group-hover:glow transition-all"></i>
+                    <h4 class="font-bold text-xl mb-2 italic">Sistemas KDS</h4>
+                    <p class="text-slate-500 text-sm">Monitores de cocina para digitalizar comandas. Adiós al papel,
+                        hola a la eficiencia en tiempos.</p>
+                </div>
+            </div>
+
+            <!-- Detalle técnico -->
+            <div
+                class="mt-12 p-8 rounded-3xl bg-blue-600/5 border border-blue-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <p class="text-sm font-semibold italic text-slate-300">Nuestros sistemas KDS y tabletas reducen el
+                        tiempo de servicio hasta en un 30%.</p>
+                </div>
+                <button onclick="location.href='https://wa.me/525548389506'"
+                    class="whitespace-nowrap bg-white text-blue-900 px-6 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-50 transition-colors">
+                    Consultar Paquetes
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-24 border-t border-white/5 bg-[#01040f]">
+        <div class="max-w-7xl mx-auto px-6 text-center md:text-left">
+            <div class="grid md:grid-cols-3 gap-16">
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-3 justify-center md:justify-start">
+                        <div class="relative w-10 h-10 flex items-center justify-center">
+                            <i data-lucide="hexagon" class="w-10 h-10 text-blue-500 fill-blue-500/10"></i>
+                            <span class="absolute font-black text-white text-[10px]">IL</span>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="text-xl font-black tracking-tighter leading-none">IDEASLICI</span>
+                            <span
+                                class="text-[9px] tracking-[0.15em] text-blue-400 font-bold uppercase mt-1 italic">Ideas
+                                & Tecnología</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-500 text-sm max-w-xs">Líderes en consultoría administrativa y soluciones
+                        tecnológicas para negocios modernos.</p>
+                </div>
+                <div>
+                    <h6 class="font-black text-xs uppercase tracking-widest mb-6">Contacto</h6>
+                    <p class="text-slate-400 font-bold mb-1">5548389506</p>
+                    <p class="text-slate-400">contacto@ideaslici.com</p>
+                </div>
+                <div>
+                    <h6 class="font-black text-xs uppercase tracking-widest mb-6">Ubicación</h6>
+                    <p class="text-slate-400">CDMX, México</p>
+                    <p class="text-slate-600 text-xs mt-2 uppercase tracking-widest">Servicio a toda la república</p>
+                </div>
+            </div>
+            <div class="mt-20 pt-8 border-t border-white/5 opacity-30 text-[9px] font-black uppercase tracking-[0.4em]">
+                © 2024 IDEASLICI • TECNOLOGÍA QUE ORDENA TU ÉXITO
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar Iconos
+        lucide.createIcons();
+
+        // Control de Scroll del Navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('glass-nav');
+                nav.classList.remove('py-6');
+                nav.classList.add('py-3');
+            } else {
+                nav.classList.remove('glass-nav');
+                nav.classList.add('py-6');
+                nav.classList.remove('py-3');
+            }
+        });
+
+        // Menú Móvil
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.onclick = () => mobileMenu.classList.remove('translate-x-full');
+        closeBtn.onclick = () => mobileMenu.classList.add('translate-x-full');
+        mobileLinks.forEach(link => link.onclick = () => mobileMenu.classList.add('translate-x-full'));
+
+        // Renderizar Servicios
+        const services = [
+            { icon: 'database', title: 'Costos e Inventarios', desc: 'Análisis profundo de recetas y stock.' },
+            { icon: 'settings', title: 'Control Administrativo', desc: 'Implementamos flujos que blindan tu negocio.' },
+            { icon: 'bar-chart-3', title: 'Lectura de Datos', desc: 'Dashboards inteligentes para entender todo.' },
+            { icon: 'line-chart', title: 'Business Intelligence', desc: 'Herramientas avanzadas para proyectar crecimiento.' },
+            { icon: 'shield-check', title: 'Auditoría Operativa', desc: 'Revisiones sorpresa y control de cajas.' },
+            { icon: 'trending-up', title: 'Optimización de Ventas', desc: 'Estrategias para aumentar el ticket promedio.' }
+        ];
+
+        const grid = document.getElementById('services-grid');
+        services.forEach(s => {
+            grid.innerHTML += `
+                <div class="p-10 rounded-[3rem] bg-white/[0.02] border border-white/5 hover:border-blue-500/50 transition-all group">
+                    <div class="mb-6 p-4 bg-white/5 w-fit rounded-2xl group-hover:bg-blue-500/10 transition-colors">
+                        <i data-lucide="${s.icon}" class="text-blue-400"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4 italic">${s.title}</h4>
+                    <p class="text-slate-500 font-medium leading-relaxed">${s.desc}</p>
+                </div>
+            `;
+        });
+
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

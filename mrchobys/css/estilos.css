@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.menu img{
+    width: 100%;
+}
+
+#btn-mas{
+    display: none;
+}
+.container{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+.redes a, .icon-plus{
+    display: block;
+    text-decoration: none;
+    background-color: #ab1017;
+    color: #fff;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.4);
+    transition: all 500ms ease;
+}
+.redes a:hover{
+    background-color: #ab101886;
+    color: #fff;
+}
+.redes a{
+    margin-bottom: -15px;
+    opacity: 0;
+    visibility: hidden;
+}
+#btn-mas:checked~ .redes a{
+    margin-bottom: 10px;
+    opacity: 1;
+    visibility: visible;
+}
+.fa-plus{
+    cursor: pointer;
+    background: #ab1017;
+    font-size: 23px;
+    padding: 30%;
+    border-radius: 50%;
+    color: #fff;
+}
+#btn-mas:checked ~ .btn-mas .fa-plus{
+    transform: rotate(137deg);
+    font-size: 25px;
+}
+/* ir arriba */
+.ir-arriba{
+    display: none;
+    cursor: pointer;
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+}
+.ir-arriba i{
+    font-size: 30px;
+    color: black;
+    padding: 10px 15px;
+}
+.ir-arriba i:hover{
+    border: 1px solid #000;
+}

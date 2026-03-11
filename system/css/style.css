@@ -1,0 +1,49 @@
+/* Fuentes y variables */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+:root {
+    --primary: #4f46e5;
+    --bg-main: #f8fafc;
+}
+
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--bg-main);
+}
+
+/* Estados de navegación */
+.nav-item.active { 
+    background: var(--primary); 
+    color: white; 
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.2);
+}
+
+.view-section { display: none; }
+.view-section.active { display: block; }
+
+/* Estilos de input numérico */
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+/* Scroll personalizado */
+.custom-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+/* Transición para el sidebar móvil */
+#mobile-sidebar {
+    transition: transform 0.3s ease-in-out;
+}
+.sidebar-hidden {
+    transform: translateX(-100%);
+}
+.sidebar-visible {
+    transform: translateX(0);
+}

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Productos - BosqueReal Style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        :root {
+            --br-navy: #0a1f33;
+            --br-gold: #b39b6d;
+            --br-light-gold: #f4f1ea;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=2000');
+            /* Imagen representativa de paisaje boscoso/campo de golf */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Capa de superposición para mejorar contraste */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 31, 51, 0.85) 0%, rgba(179, 155, 109, 0.4) 100%);
+            z-index: -1;
+        }
+
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .br-border-gold {
+            border-color: var(--br-gold);
+        }
+
+        .br-bg-navy {
+            background-color: var(--br-navy);
+        }
+
+        .br-text-gold {
+            color: var(--br-gold);
+        }
+
+        .btn-premium {
+            background-color: var(--br-navy);
+            border: 1px solid var(--br-gold);
+            transition: all 0.3s ease;
+        }
+
+        .btn-premium:hover {
+            background-color: var(--br-gold);
+            color: var(--br-navy);
+            transform: translateY(-2px);
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(179, 155, 109, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        #statusMessage {
+            display: none;
+        }
+
+        .family-tag {
+            background-color: var(--br-navy);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            margin: 2px;
+            font-size: 0.75rem;
+            border: 1px solid var(--br-gold);
+        }
+
+        .family-tag button {
+            margin-left: 8px;
+            color: var(--br-gold);
+            font-weight: bold;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        input,
+        select,
+        textarea {
+            background-color: transparent !important;
+        }
+
+        .input-group:focus-within label {
+            color: var(--br-gold);
+        }
+
+        /* Estilo para las barras de desplazamiento */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--br-navy);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--br-gold);
+        }
+    </style>
+</head>
+
+<body class="py-12 px-4">
+
+    <div class="max-w-4xl mx-auto glass-morphism rounded-lg overflow-hidden transition-all duration-500">
+        <!-- Encabezado -->
+        <div class="br-bg-navy p-10 text-center border-b-4 br-border-gold relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <path d="M0 100 L50 0 L100 100 Z" fill="white" />
+                </svg>
+            </div>
+            <h1 class="text-3xl md:text-4xl serif-title text-white tracking-widest uppercase relative z-10">Alta de
+                Productos</h1>
+            <div class="w-24 h-1 bg-[#b39b6d] mx-auto mt-4 relative z-10"></div>
+            <p class="text-gray-300 mt-4 font-light italic relative z-10 tracking-wide">Gestión de Inventarios
+                BosqueReal</p>
+        </div>
+
+        <div id="statusMessage" class="m-6 p-4 rounded text-center font-bold"></div>
+
+        <form id="productForm" class="p-8 md:p-12 space-y-12">
+            <!-- SECCIÓN 1: DATOS GENERALES -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="col-span-1 md:col-span-2">
+                    <h3
+                        class="br-text-gold uppercase text-xs tracking-[0.2em] font-bold mb-2 border-b br-border-gold pb-2 inline-block">
+                        01. Datos del Artículo</h3>
+                </div>
+
+                <div class="input-group">
+                    <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-1">Nombre del
+                        Producto</label>
+                    <input type="text" id="nombre" name="nombre" maxlength="29" required
+                        class="w-full px-0 py-2 border-b-2 border-gray-200 focus:border-[#b39b6d] outline-none transition text-gray-800 font-medium"
+                        placeholder="Ej. Hamburguesa de Res">
+                    <p id="charCount" class="text-[9px] text-gray-400 mt-1 uppercase tracking-tighter">0 / 29 caracteres
+                    </p>
+                </div>
+
+                <div class="input-group">
+                    <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-1">Precio de
+                        Venta ($)</label>
+                    <input type="text" id="precioVenta" name="precioVenta" required inputmode="numeric"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                        class="w-full px-0 py-2 border-b-2 border-gray-200 focus:border-[#b39b6d] outline-none transition text-gray-800 font-medium"
+                        placeholder="0">
+                </div>
+
+                <div class="input-group">
+                    <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-1">Familia
+                        Principal</label>
+                    <select id="familiaDefecto" name="familiaDefecto" required
+                        class="w-full px-0 py-2 border-b-2 border-gray-200 focus:border-[#b39b6d] outline-none transition text-sm cursor-pointer">
+                        <option value="">Seleccione...</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-1">Categorías
+                        Adicionales</label>
+                    <select id="selectorAdicionales"
+                        class="w-full px-0 py-2 border-b-2 border-gray-200 focus:border-[#b39b6d] outline-none transition text-sm cursor-pointer">
+                        <option value="">Añadir otra...</option>
+                    </select>
+                    <div id="tagsContainer" class="mt-3 flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 2: CLASIFICACIÓN -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pt-4">
+                <div class="col-span-1 md:col-span-3">
+                    <h3
+                        class="br-text-gold uppercase text-xs tracking-[0.2em] font-bold mb-2 border-b br-border-gold pb-2 inline-block">
+                        02. Clasificación</h3>
+                </div>
+
+                <div class="input-group">
+                    <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-1">Tipo de
+                        Inventario</label>
+                    <select id="tipo" name="tipo" required
+                        class="w-full px-0 py-2 border-b-2 border-gray-200 focus:border-[#b39b6d] outline-none transition text-sm cursor-pointer">
+                        <option value="">Seleccione...</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-1">Grupo
+                        (Escribir/Seleccionar)</label>
+                    <input type="text" id="grupo" name="grupo" list="grupoList" required placeholder="Ej. ALIMENTOS"
+                        class="w-full px-0 py-2 border-b-2 border-gray-200 focus:border-[#b39b6d] outline-none transition text-sm">
+                    <datalist id="grupoList"></datalist>
+                </div>
+
+                <div class="input-group">
+                    <label
+                        class="block text-[10px] uppercase tracking-widest font-bold text-gray-500 mb-1">Subgrupo</label>
+                    <input type="text" id="subgrupo" name="subgrupo" list="subgrupoList" placeholder="Opcional"
+                        class="w-full px-0 py-2 border-b-2 border-gray-200 focus:border-[#b39b6d] outline-none transition text-sm">
+                    <datalist id="subgrupoList"></datalist>
+                </div>
+            </div>
+
+            <!-- SECCIÓN 3: RECETA -->
+            <div class="pt-4">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="br-text-gold uppercase text-xs tracking-[0.2em] font-bold border-b br-border-gold pb-2">
+                        03. Insumos y Receta</h3>
+                    <button type="button" onclick="addIngredient()"
+                        class="text-[10px] uppercase tracking-widest font-bold br-text-gold border br-border-gold px-4 py-2 hover:bg-[#b39b6d] hover:text-white transition-all">
+                        + Agregar Insumo
+                    </button>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-100 overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="text-[9px] uppercase tracking-[0.2em] text-gray-400 border-b border-gray-200">
+                                <th class="pb-3 text-left">Insumo / Artículo</th>
+                                <th class="pb-3 text-left">Unidad</th>
+                                <th class="pb-3 text-left">Cantidad</th>
+                                <th class="pb-3 text-left">Bodega</th>
+                                <th class="pb-3 text-right">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ingredientsBody" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="pt-8">
+                <button type="submit" id="btnSubmit"
+                    class="w-full btn-premium text-white py-5 uppercase tracking-[0.4em] font-bold text-xs shadow-2xl">
+                    Finalizar y Enviar Registro
+                </button>
+                <p class="text-center text-[9px] text-gray-400 mt-4 uppercase tracking-widest">Este envío es procesado
+                    de forma segura por EmailJS</p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const FAMILIAS = ["AGUAS Y REFRESCOS", "AGUAS Y REFRESCOS ALBERCA", "AGUAS Y REFRESCOS ARBOL", "AGUAS Y REFRESCOS BK", "AGUAS Y REFRESCOS CARROS", "AGUAS Y REFRESCOS CARROS CE", "AGUAS Y REFRESCOS CE", "AGUAS Y REFRESCOS H19", "AGUAS Y REFRESCOS SJ", "ALBERCA", "ALBERCA BR", "ALIMENTOS ARBOL", "ALIMENTOS BUNKER", "ALIMENTOS ELLIE SAAB", "ALIMENTOS REFUGIO CE", "ALIMENTOS TORNEOS", "ANTOJITOS BK", "AVES Y CARNES BK", "AVES Y PESCADOS CE", "BASTON", "BASTON-N", "BEBIDAS BUNKER", "BEBIDAS CALIENTES ELLIE SAAB", "BEBIDAS CARROS CE", "BEBIDAS CON ALCOHOL", "BEBIDAS CON ALCOHOL ARBOL", "BEBIDAS CON ALCOHOL CE", "BEBIDAS CON ALCOHOL H19", "BEBIDAS ELLIE SAAB", "BEBIDAS EVENTOS", "BEBIDAS FRIAS ELLIE SAAB", "BEBIDAS SIN ALCOHOL", "BEBIDAS SIN ALCOHOL ARBOL", "BEBIDAS SIN ALCOHOL CE", "BEBIDAS SIN ALCOHOL H19", "BEBIDAS SJ", "BEBIDAS Y REFRESCOS ELLIE SAAB", "BERMUDA-N", "BERMUDAS", "BOLERA", "BOLSA-N", "BOLSAS", "BOTANA", "BOTELLA", "BOTELLA CE", "BOTELLAS ALBERCA", "BOTELLAS ARBOL", "BOTELLAS CARRO CE", "BOTELLAS CARROS", "BOTELLAS H19", "BOWLS ELLIE SAAB", "BOX LUNCH EVENTOS", "BRANDY", "BRANDY ALBERCA", "BRANDY ARBOL", "BRANDY CE", "BRANDY COP", "BRANDY COP ALBERCA", "BRANDY COP ARBOL", "BRANDY COP CE", "BRANDY COP H19", "BRANDY H19", "BUFFET BK", "BUFFET CASA CLUB", "BUFFETT EVENTOS", "BUNKER", "CABEZA-N", "CAFÉ Y TE", "CAFÉ Y TE ALBERCA", "CAFE Y TE ARBOL", "CAFÉ Y TE BK", "CAFÉ Y TE CE", "CAFÉ Y TE H19", "CAFÉ Y TE SJ", "CAFETERIA", "CAJA PELOTA-N", "CALCETAS", "CALCETAS-N", "CALCETA-X", "CALCETIN", "CALDOS Y SOPAS BK", "CAMPO EJECUTIVO", "CANAPES EVENTOS", "CAPUCHA", "CARA", "CARNES", "CARNES ALBERCA", "CARNES BUFFET", "CARNES CE", "CARNES H19", "CARRETILLA", "CARROS", "CENAS NAVIDEÑAS & FIN DE AÑO", "CERA", "CEREALES", "CEREALES CE", "CEREALES H19", "CERVEZA", "CERVEZA ALBERCA", "CERVEZA BK", "CERVEZA CARROS", "CERVEZA CARROS CE", "CERVEZA CE", "CERVEZA H19", "CERVEZA SJ", "CERVEZAS ARBOL", "CHALECO", "CHALECO-N", "CHAMARRA", "CHAMARRA-N", "CHAMPAGNE", "CHAMPAGNE ALBERCA", "CHAMPAGNE ARBOL", "CHAMPAGNE CE", "CHAMPAGNE COP", "CHAMPAGNE COP ALBERCA", "CHAMPAGNE COP CE", "CHAMPAGNE COP H19", "CHAMPAGNE H19", "CHICLES", "CHOCOLATES", "CHOCOLATES BK", "CIGARROS", "CIGARROS CE", "CIGARROS H19", "CINTURON", "CINTURON-N", "COCTELERIA", "COCTELERIA ALBERCA", "COCTELERIA ARBOL", "COCTELERIA CE", "COCTELERIA H19", "COFFEE BREAK", "COGÑAC", "COGÑAC ALBERCA", "COGÑAC ARBOL", "COGÑAC CE", "COGÑAC COP", "COGÑAC COP ALBERCA", "COGÑAC COP ARBOL", "COGÑAC COP CE", "COGÑAC COP H19", "COGÑAC H19", "COLOR", "COMIDAS", "COMIDAS ALB", "COMIDAS CAMPO E", "COMIDAS H19", "COMPLEMENTOS EVENTOS", "CONJUNTOS", "COPEO", "COPEO ALBERCA", "COPEO ARBOL", "COPEO CARROS", "COPEO CARROS CE", "COPEO CE", "COPEO H19", "CREMA", "DESAYUNOS", "DESAYUNOS BUNKER", "DESAYUNOS CAMPO E*", "DESAYUNOS EVENTOS", "DESAYUNOS H19", "DULCES", "EMPAREDADOS FRESCOS ELLIE SAAB", "ENSALADAS", "ENSALADAS ALBERCA", "ENSALADAS BK", "ENSALADAS CE", "ENSALADAS H19", "ENTRADAS", "ENTRADAS ALBERCA", "ENTRADAS ARBOL", "ENTRADAS BUFFET", "ENTRADAS CE", "ENTRADAS H19", "ESPUMA", "EXHIBIDOR-N", "EXT JARABES ELLIE SAAB", "EXTRAS", "EXTRAS BEBIDAS ELLIE SAAB", "EXTRAS CE", "EXTRAS H19", "EXTRAS NAVIDEÑO", "FAJA", "FALDA", "FRAPES ELLIE SAAB", "FRUTA", "FRUTA BK", "FRUTA CE", "FRUTA H19", "FUNDAS", "GENERAL", "GINEBRA", "GINEBRA ALBERCA", "GINEBRA ARBOL", "GINEBRA CE", "GINEBRA COP", "GINEBRA COP ALBERCA", "GINEBRA COP ARBOL", "GINEBRA COP CE", "GINEBRA COP H19", "GINEBRA H19", "GOLF", "GOOGLES", "GOOGLES-N", "GORRA-N", "GORRAS", "GRIP", "GRIP-N", "GUANTE", "GUANTE-N", "GUANTES", "HELADOS", "HELADOS H19", "HOYO 19", "HUEVOS", "HUEVOS BK", "HUEVOS CE", "HUEVOS H19", "JEREZ", "JEREZ ALBERCA", "JEREZ ARBOL", "JEREZ CE", "JEREZ COP", "JEREZ COP ALBERCA", "JEREZ COP ARBOL", "JEREZ COP CE", "JEREZ COP H19", "JEREZ H19", "JOGGER-N", "JUGOS", "JUGOS ALBERCA", "JUGOS ARBOL", "JUGOS BK", "JUGOS CARROS CE", "JUGOS CE", "JUGOS ELLIE SAAB", "JUGOS H19", "LICOR", "LICOR ALBERCA", "LICOR ARBOL", "LICOR CE", "LICOR COP", "LICOR COP ALBERCA", "LICOR COP ARBOL", "LICOR COP CE", "LICOR COP H19", "LICOR H19", "LLAVEROS", "LO CLASICO", "LO CLASICO BK", "LO CLASICO CE", "LO CLASICO H19", "LO DULCE", "LO DULCE CE", "LO DULCE H19", "LO FRESCO", "LO FRESCO H19", "LO SANO", "LO SANO BK", "LO SANO CE", "LO SANO H19", "LO TRADICIONAL CE", "MADERA", "MALETA", "MALETA-N", "MANGA-N", "MANGAS", "MANGAS-N", "MANOS", "MAQUILLAJE", "MARCA-N", "MARCAS", "MAYON", "MEDIAS ENSALADAS", "MEDIAS ENSALADAS BK", "MEDIAS ENSALADAS H19", "MENU 3 T EVENTOS", "MENU 4 T EVENTOS", "MENU BUFFET", "MENU INFANTIL", "MENU NAVIDEÑO", "MENU SALON DE EVENTOS", "MEZCAL", "MEZCAL ARBOL", "MEZCAL CE", "MEZCAL COP", "MEZCAL COP ARBOL", "MEZCAL COP CE", "MEZCAL COP H19", "MEZCAL H19", "MOCHILA", "ORDEN DE TACOS", "ORDEN DE TACOS ALBERCA", "ORDEN DE TACOS H19", "PALETAS", "PALETAS CE", "PALOS ", "PAN", "PANADERIA", "PANADERIA Y POSTRES ELLIE SAAB", "PANTALON", "PANTALON-N", "PANTS", "PAPAS", "PARA ACOMPAÑAR", "PARA ACOMPAÑAR ALBERCA", "PARA ACOMPAÑAR ARBOL", "PARA ACOMPAÑAR CE", "PARA ACOMPAÑAR H19", "PARA ACOMPAÑAR SJ", "PARA COMPARTIR BK", "PARRILLADA CE", "PASTAS", "PASTAS ALBERCA", "PASTAS BUFFET", "PASTAS CE", "PASTAS H19", "PEINADOS", "PELOTAS", "PESCADOS Y MARISCOS", "PESCADOS Y MARISCOS ALBERCA", "PESCADOS Y MARISCOS ARBOL", "PESCADOS Y MARISCOS BUFFET", "PESCADOS Y MARISCOS H19", "PLATILLOS MEXICANOS", "PLATILLOS MEXICANOS ALBERCA", "PLATILLOS MEXICANOS BUFFET", "PLATILLOS MEXICANOS H19", "PLATOS FUERTES ARBOL", "PLATOS FUERTRES ALBERCA", "PLAYERA-N", "PLAYERAS", "PLAYERAS-N", "POLLO", "POLLO ALBERCA", "POLLO BUFFET", "POLLO H19", "POSTRES", "POSTRES ALBERCA", "POSTRES ARBOL", "POSTRES BK", "POSTRES BUFFET", "POSTRES CE", "POSTRES H19", "POSTRES IN VITRO ELLIE SAAB", "PRODUCTO", "PROSHOP", "PROTECTOR SOLAR-N", "PROTEINAS ELLIE SAAB", "QUESADILLAS", "QUESADILLAS ALBERCA", "QUESADILLAS DESAYUNO", "QUESADILLAS DESAYUNO H19", "QUESADILLAS H19", "REFRESHERS ELLIE SAAB", "RON", "RON ALBERCA", "RON ARBOL", "RON CE", "RON COP", "RON COP ALBERCA", "RON COP ARBOL", "RON COP CE", "RON COP H19", "RON H19", "SALON DE BELLEZA", "SALON DEL ARBOL", "SALON EVENTOS", "SANDWICH", "SANDWICHES  H19", "SANDWICHES Y TORTAS COMIDAS CE", "SANDWICHES Y TORTAS DESAYUNO CE", "SCHIACCATAS ELLIE SAAB", "SERVICIOS CAMPO DE GOLF", "SERVICIOS SIN PROPINA CON IVA EVENTOS", "SERVICIOS SIN PROPINA SIN IVA EVENTOS", "SET-N", "SHORT", "SIMULADOR", "SLEEVE-N", "SMOOTHIES ELLIE SAAB", "SNACK", "SNACK ALBERCA", "SNACK BK", "SNACK H19", "SNACKS BUFFET", "SOLO FIN DE SEMANA", "SOLO FIN DE SEMANA BK", "SOLO FIN DE SEMANA CE", "SOLO FIN DE SEMANA H19", "SOMBRERO", "SOMBRERO-N", "SOMBRILLA", "SOMBRILLA-N", "SOPAS", "SOPAS ALBERCA", "SOPAS BUFFET", "SOPAS CE", "SOPAS H19", "SOPAS Y PASTAS ARBOL", "SOPES", "SOPES ALBERCA", "SOPES COMIDAS H19", "SOPES DESAYUNO", "SOPES DESAYUNO H19", "SOPES Y QUESADILLAS BK", "SOPES Y QUESADILLAS BUFFET", "SOPES Y QUESADILLAS CE", "SOPES Y QUESADILLAS COMIDAS CE", "SOPES Y QUESADILLAS REFUGIO", "SPA", "SPRAY", "SUDADERA", "SUDADERA-N", "SUETERES", "TACOS", "TACOS ALBERCA", "TACOS BK", "TACOS BUFFET", "TACOS CE", "TACOS COMIDA CE", "TACOS DESAYUNO", "TACOS DESAYUNOS H19", "TACOS H19", "TAMALES", "TAMALES BK", "TEE-N", "TEES", "TEES-X", "TEQUILA", "TEQUILA ALBERCA", "TEQUILA ARBOL", "TEQUILA CE", "TEQUILA COP", "TEQUILA COP ALBERCA", "TEQUILA COP ARBOL", "TEQUILA COP CE", "TEQUILA COP H19", "TEQUILA H19", "TERMO", "TIARA", "TIEMPOS", "TOALLA-N", "TOALLAS", "TOLLA-N", "TOP", "TORTAS ALBERCA", "TORTAS COMIDA H19", "TORTAS DESAYUNO", "TORTAS DESAYUNO H19", "TORTAS REFUGIO", "TORTAS Y CHAPATAS", "TORTAS Y SANDWICHES BK", "TRAJE DE BAÑO", "TRAJE DE BAÑO-N", "TRATAMIENTO", "USO DIARIO", "VARIOS", "VINO BLANCO", "VINO BLANCO ALBERCA", "VINO BLANCO ARBOL", "VINO BLANCO CE", "VINO BLANCO H19", "VINO TINTO", "VINO TINTO ALBERCA", "VINO TINTO ARBOL", "VINO TINTO CE", "VINO TINTO H19", "VINOS", "VINOS ALBERCA", "VINOS ARBOL", "VINOS CE", "VINOS COP ALBERCA", "VINOS COP ARBOL", "VINOS COPEO", "VINOS COPEO CE", "VINOS COPEO H19", "VINOS H19", "VISERAS", "VODKA", "VODKA ALBERCA", "VODKA ARBOL", "VODKA CE", "VODKA COP", "VODKA COP ALBERCA", "VODKA COP ARBOL", "VODKA COP CE", "VODKA COP H19", "VODKA H19", "VOLCANES BK", "WHISKY", "WHISKY ALBERCA", "WHISKY ARBOL", "WHISKY CE", "WHISKY COP", "WHISKY COP ALBERCA", "WHISKY COP ARBOL", "WHISKY COP CE", "WHISKY COP H19", "WHISKY H19", "ZAPATERA", "ZAPATO", "ZAPATO-N"];
+        const TIPOS = ["ALIMENTOS", "BEBIDAS", "BEBIDAS CON ALCOHOL", "BODEGON", "COMBUSTIBLES", "DESTILADOS", "HERRAMIENTA Y EQUIPO", "MANTENIMIENTO A EDIFICIO Y EQUIPO", "MATERIAL DE FERRETERIA", "MATERIAL ELECTRICO Y DE ILUMINACION", "MATERIALES DE PLOMERIA", "MATTO DE CAMPO DE GOLF", "PRODUCTO", "PRODUCTOS QUIMICOS", "PROSHOP", "REFACCIONES Y HERRAMIENTAS DE TRABAJO", "REFACCIONES Y QUIMICOS PARA ALBERCAS", "RETIRO ESCOMBRO/MACHETEROS", "SERVICIO DE LEVANTAMIENTO TOPOGRÁFICO", "SERVICIO MANTENIMIENTO PLANTA DE EMERGENCIA", "SERVICIOS", "SERVICIOS EXTERNOS", "SUMINISTROS", "TABAQUERIA", "VINOS"];
+        const GRUPOS = ["ACEITES, GRASAS  Y LUBRICANTES", "ALUMINIO", "CRISTALERÍA Y EQUIPO MENOR.", "EQUIPO ELECTRICO", "ESTACIÓN DE BOMBEO ", "GENERAL", "GOLF", "GRUPO DE PRODUCTO", "HERRERIA", "ILUMINACION", "MANTENIMIENTO A EDIFICIO Y EQUIPO", "MODIFICADOR ALIMENTOS", "MODIFICADOR BEBIDAS", "SERIVICIO COMPAS SERVICIO AL SOCIO", "SERVICIO COMPRA DE EQUIPO ", "SERVICIO DE TOPOGRAFÍA ", "SERVICIO DE UNIFORMES POR EVENTO GOLF", "SERVICIO MENSUAL DE PARAMEDICO", "SERVICIO PAGOS MENSUALES", "SERVICIOS DE FARMACIA GENERAL", "SERVICIOS DE IMPLEMENTACIÓN", "SERVICIOS DE RED", "SERVICIOS DE SERVICIO AL SOCIO", "SUMINISTRO DE ÁRBOLES Y PLANTAS"];
+        const SUBGRUPOS = ["ACCESORIOS", "BASTON-N", "BEBIDAS", "BELLEZA", "BERMUDA-N", "BOLSA-N", "CABEZA-N", "CAJA PELOTA-N", "CALCETA-N", "CALCETAS-N", "CERVEZAS", "CHALECO-N", "CHAMARRA-N", "CINTURON-N", "COMIDAS", "COMIDAS, DESAYUNOS", "COTELERIA", "DESAYUNOS", "DESTILADOS", "DULCERIA", "EXHIBIDOR-N", "FARMACIA", "GOOGLES-N", "GORRA-N", "GORRO-N", "GRIP-N", "GUANTE-N", "HIBRIDO-N", "JOGGER-N", "LIMPIEZA", "MALETA-N", "MANGA-N", "MANGAS-N", "MARCA-N", "PANTALON-N", "PELOTA -N", "PELOTA-N", "PLAYERA-N", "PLAYERAS-N", "PRODUCTO-N", "PUTTER-N", "ROPA", "SET-N", "SLEEVE-N", "SOLO FIN DE SEMANA", "SOMBRERO-N", "SOMBRILLA-N", "SUDADERA-N", "TABAQUERIA", "TAPETE-N", "TEE-N", "TEES-N", "TENIS -N", "TENIS-N", "TOALLA-N", "TOLLA-N", "TRAJE DE BAÑO-N", "VARILLA-N", "VINOS", "VISERA-N", "ZAPATO-N"];
+
+        let familiasSeleccionadas = [];
+
+        (function () {
+            emailjs.init("BVkswump5kiijAE64");
+            cargarSelectores();
+        })();
+
+        function cargarSelectores() {
+            const defFam = document.getElementById('familiaDefecto');
+            const adiFam = document.getElementById('selectorAdicionales');
+            const selTipo = document.getElementById('tipo');
+            const listGrupo = document.getElementById('grupoList');
+            const listSub = document.getElementById('subgrupoList');
+
+            FAMILIAS.forEach(f => {
+                defFam.add(new Option(f, f));
+                adiFam.add(new Option(f, f));
+            });
+            TIPOS.forEach(t => selTipo.add(new Option(t, t)));
+            GRUPOS.forEach(g => {
+                const opt = document.createElement('option');
+                opt.value = g;
+                listGrupo.appendChild(opt);
+            });
+            SUBGRUPOS.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s;
+                listSub.appendChild(opt);
+            });
+        }
+
+        document.getElementById('selectorAdicionales').addEventListener('change', function (e) {
+            const val = e.target.value;
+            if (val && !familiasSeleccionadas.includes(val)) {
+                familiasSeleccionadas.push(val);
+                renderTags();
+            }
+            e.target.value = "";
+        });
+
+        function renderTags() {
+            const container = document.getElementById('tagsContainer');
+            container.innerHTML = "";
+            familiasSeleccionadas.forEach(f => {
+                const tag = document.createElement('span');
+                tag.className = "family-tag animate-in fade-in duration-300";
+                tag.innerHTML = `${f} <button type="button" onclick="removeTag('${f}')">&times;</button>`;
+                container.appendChild(tag);
+            });
+        }
+
+        function removeTag(f) {
+            familiasSeleccionadas = familiasSeleccionadas.filter(item => item !== f);
+            renderTags();
+        }
+
+        function addIngredient() {
+            const row = document.createElement('tr');
+            row.className = "hover:bg-gray-100 transition-colors duration-200";
+            row.innerHTML = `
+                <td class="py-4 pr-2"><input type="text" class="insumo-nombre w-full bg-transparent border-b border-gray-200 outline-none text-xs text-gray-700" required placeholder="Nombre insumo"></td>
+                <td class="py-4 pr-2">
+                    <select class="insumo-medida w-full bg-transparent border-b border-gray-200 outline-none text-xs text-gray-700">
+                        <option>Piezas (pza)</option><option>Gramos (g)</option><option>Kilos (kg)</option><option>Mililitros (ml)</option><option>Litros (l)</option>
+                    </select>
+                </td>
+                <td class="py-4 pr-2"><input type="number" step="0.01" class="insumo-cantidad w-full bg-transparent border-b border-gray-200 outline-none text-xs text-gray-700" required placeholder="0.00"></td>
+                <td class="py-4 pr-2"><input type="text" class="insumo-bodega w-full bg-transparent border-b border-gray-200 outline-none text-xs text-gray-700" required placeholder="Nombre bodega"></td>
+                <td class="py-4 text-right"><button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-300 hover:text-red-500 font-bold transition-colors">ELIMINAR</button></td>
+            `;
+            document.getElementById('ingredientsBody').appendChild(row);
+        }
+
+        // Inicializar con un insumo
+        addIngredient();
+
+        const nombreInput = document.getElementById('nombre');
+        const charCount = document.getElementById('charCount');
+        nombreInput.addEventListener('input', () => {
+            charCount.textContent = `${nombreInput.value.length} / 29 caracteres`;
+        });
+
+        document.getElementById('productForm').onsubmit = function (event) {
+            event.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            const originalText = btn.innerText;
+            btn.innerText = "PROCESANDO ENVÍO INSTITUCIONAL...";
+            btn.disabled = true;
+
+            let recetaHtml = "";
+            document.querySelectorAll('#ingredientsBody tr').forEach(row => {
+                const n = row.querySelector('.insumo-nombre').value;
+                const m = row.querySelector('.insumo-medida').value;
+                const c = row.querySelector('.insumo-cantidad').value;
+                const b = row.querySelector('.insumo-bodega').value;
+                recetaHtml += `• ${n}: ${c} ${m} [Bodega: ${b}]\n`;
+            });
+
+            const templateParams = {
+                to_email: "valeonardoag@gmail.com",
+                producto_nombre: nombreInput.value,
+                familia_defecto: document.getElementById('familiaDefecto').value,
+                precio_venta: document.getElementById('precioVenta').value,
+                familias_adicionales: familiasSeleccionadas.length > 0 ? familiasSeleccionadas.join(", ") : "Ninguna",
+                tipo: document.getElementById('tipo').value,
+                grupo: document.getElementById('grupo').value,
+                subgrupo: document.getElementById('subgrupo').value || "No especificado",
+                receta_detalle: recetaHtml
+            };
+
+            emailjs.send('service_ldxhtfa', 'template_coqmpvf', templateParams, 'BVkswump5kiijAE64')
+                .then(function () {
+                    const statusMsg = document.getElementById('statusMessage');
+                    statusMsg.style.display = "block";
+                    statusMsg.className = "m-6 p-4 rounded bg-green-50 text-green-700 border border-green-200 text-sm tracking-wide";
+                    statusMsg.innerText = "¡REGISTRO EXITOSO! Los datos han sido enviados a la administración.";
+                    document.getElementById('productForm').reset();
+                    document.getElementById('ingredientsBody').innerHTML = "";
+                    familiasSeleccionadas = [];
+                    renderTags();
+                    addIngredient();
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, function (err) {
+                    const statusMsg = document.getElementById('statusMessage');
+                    statusMsg.style.display = "block";
+                    statusMsg.className = "m-6 p-4 rounded bg-red-50 text-red-700 border border-red-200 text-sm tracking-wide";
+                    statusMsg.innerText = "ERROR EN EL ENVÍO: " + (err.text || "Fallo de conexión");
+                    btn.innerText = "REINTENTAR ENVÍO";
+                    btn.disabled = false;
+                });
+        };
+    </script>
+</body>
+
+</html>
