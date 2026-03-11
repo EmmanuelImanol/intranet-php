@@ -102,7 +102,7 @@ function perm(array $perms, string $module, string $role, string $action): bool 
     return (bool)($perms[$module][$role][$action] ?? 0);
 }
 ?>
-<?php $page_title = 'Configuración'; $extra_css = ['../../public/css/settings.css']; include __DIR__ . '/../components/header.php'; ?>
+<?php $page_title = 'Configuración'; $extra_css = ['../../public/css/settings.css']; include __DIR__ . '/../components/head.php'; ?>
 <body>
 
   <?php $active_page = 'settings'; include __DIR__ . '/../components/sidebar.php'; ?>

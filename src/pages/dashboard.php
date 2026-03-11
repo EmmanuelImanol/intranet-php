@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/permissions.php';
 
 // Protect route — redirect to login if not authenticated
 if (!isset($_SESSION['user_id'])) {
@@ -23,6 +24,7 @@ $user_area  = $_SESSION['user_area'] ?? '';
 $is_admin   = $user_role === 'admin';
 
 $db = connectDB();
+loadPermissions($db);
 
 // ── Stat: total users (admin = all, supervisor = their area, empleado = their area) ──
 if ($is_admin) {
@@ -81,7 +83,7 @@ if ($stmt) $docs = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<?php $page_title = 'Dashboard'; include __DIR__ . '/../components/header.php'; ?>
+<?php $page_title = 'Dashboard'; include __DIR__ . '/../components/head.php'; ?>
 <body>
 
   <!-- ── Sidebar ── -->

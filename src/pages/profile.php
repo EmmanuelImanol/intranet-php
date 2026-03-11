@@ -98,7 +98,7 @@ $area_display = $area_labels[$user_area] ?? ($user_area ? ucfirst($user_area) : 
 $role_display = $role_labels[$user_role] ?? ucfirst($user_role);
 $member_since = date('d \d\e F \d\e Y', strtotime($user['created_at']));
 ?>
-<?php $page_title = 'Mi perfil'; $extra_css = ['../../public/css/profile.css']; include __DIR__ . '/../components/header.php'; ?>
+<?php $page_title = 'Mi perfil'; $extra_css = ['../../public/css/profile.css']; include __DIR__ . '/../components/head.php'; ?>
 <body>
 
   <?php $active_page = 'profile'; include __DIR__ . '/../components/sidebar.php'; ?>

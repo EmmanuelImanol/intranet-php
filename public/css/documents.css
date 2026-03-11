@@ -99,6 +99,8 @@
 }
 
 .doc-table thead tr { border-bottom: 1px solid var(--border); }
+.doc-table thead { position: sticky; top: 0; z-index: 1; background: var(--surface); }
+
 
 .doc-table th {
   padding: 0.85rem 1.25rem;
@@ -362,7 +364,7 @@
 @media (max-width: 768px) {
   /* Layout */
   .documents-layout  { flex-direction: column; }
-  .table-wrapper     { margin: 1rem; overflow-x: auto; }
+  .table-wrapper     { margin: 1rem; overflow-x: auto; overflow-y: auto; max-height: 60vh; min-height: 200px; }
   .doc-preview-panel { width: 100%; max-height: 340px; border-left: none; border-top: 1px solid var(--border); }
 
   /* Toolbar */

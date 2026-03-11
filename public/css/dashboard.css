@@ -126,6 +126,7 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 .user-badge {
@@ -451,6 +452,7 @@ a.doc-item:hover { padding-left: 0.25rem; }
     transform: translateX(-100%);
     z-index: 300;
     box-shadow: none;
+    height: 100dvh;
   }
   .sidebar.open {
     transform: translateX(0);

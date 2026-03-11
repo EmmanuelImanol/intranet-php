@@ -1,10 +1,11 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/permissions.php';
 
 // Only admins and supervisors can access this page
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['user_role'], ['admin', 'supervisor'])) {
-    header('Location: dashboard.php');
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../../login.php');
     exit;
 }
 
@@ -14,6 +15,8 @@ $user_role         = $_SESSION['user_role'];
 $user_area         = $_SESSION['user_area'] ?? '';
 $is_admin          = $user_role === 'admin';
 $db                = connectDB();
+loadPermissions($db);
+requirePerm('usuarios', 'view', 'dashboard.php');
 
 // Helper — consistent color per user initial
 function getUserColor(string $name): string {
@@ -172,7 +175,7 @@ if (isset($_GET['edit'])) {
 
 $role_labels = ['admin' => 'Administrador', 'supervisor' => 'Supervisor', 'empleado' => 'Empleado'];
 ?>
-<?php $page_title = 'Usuarios'; $extra_css = ['../../public/css/users.css']; include __DIR__ . '/../components/header.php'; ?>
+<?php $page_title = 'Usuarios'; $extra_css = ['../../public/css/users.css']; include __DIR__ . '/../components/head.php'; ?>
 <body>
 
   <!-- ── Sidebar ── -->
@@ -412,3 +415,4 @@ $role_labels = ['admin' => 'Administrador', 'supervisor' => 'Supervisor', 'emple
   </div>
 <?php $extra_js = ['../../public/js/users.js'];
   include __DIR__ . '/../components/footer.php'; ?>
+

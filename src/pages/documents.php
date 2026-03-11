@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/permissions.php';
 
 // Protect route
 if (!isset($_SESSION['user_id'])) {
@@ -58,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['document'])) {
 
 // ── Soft delete ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
-    if (in_array($user_role, ['admin', 'supervisor'])) {
+    if (can('documentos', 'delete')) {
         $delete_id = (int) $_POST['delete_id'];
         $stmt = $db->prepare("UPDATE documents SET deleted_at = NOW() WHERE id = ? AND deleted_at IS NULL");
         $stmt->execute([$delete_id]);
@@ -144,7 +145,7 @@ function isViewable(string $filename): bool {
     return in_array($ext, ['pdf', 'jpg', 'jpeg', 'png', 'mp4', 'webm', 'ogg']);
 }
 ?>
-<?php $page_title = 'Documentos'; $extra_css = ['../../public/css/documents.css']; include __DIR__ . '/../components/header.php'; ?>
+<?php $page_title = 'Documentos'; $extra_css = ['../../public/css/documents.css']; include __DIR__ . '/../components/head.php'; ?>
 <body>
 
   <!-- ── Sidebar ── -->
@@ -184,7 +185,7 @@ function isViewable(string $filename): bool {
         </div>
       </form>
       <div class="filter-bar">
-        <?php if ($is_admin): ?>
+        <?php if (can('documentos', 'delete')): ?>
         <a href="documents.php" class="filter-chip <?= !$filter_area ? 'active' : '' ?>">Todos</a>
         <?php foreach ($areas as $area): ?>
           <a href="?area=<?= urlencode($area) ?><?= $search ? '&search=' . urlencode($search) : '' ?>"
@@ -253,7 +254,7 @@ function isViewable(string $filename): bool {
                   </a>
 
                   <!-- Borrado lógico (solo admin/supervisor) -->
-                  <?php if (in_array($user_role, ['admin', 'supervisor'])): ?>
+                  <?php if (can('documentos', 'create')): ?>
                   <button type="button" class="btn-action delete" title="Eliminar"
                     onclick="openDeleteDocModal(<?= $doc['id'] ?>, '<?= htmlspecialchars($doc['name'], ENT_QUOTES) ?>')">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>

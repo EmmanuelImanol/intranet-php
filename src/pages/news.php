@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/permissions.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../../login.php');
@@ -12,13 +13,14 @@ $user_name = $_SESSION['user_name'];
 $user_role = $_SESSION['user_role'];
 $user_area = $_SESSION['user_area'] ?? '';
 $db        = connectDB();
+loadPermissions($db);
 
 $error   = '';
 $success = $_SESSION['flash_success'] ?? '';
 unset($_SESSION['flash_success']);
 $modal_open = false;
 
-$can_manage = in_array($user_role, ['admin', 'supervisor']);
+$can_manage = can('noticias', 'create');
 
 // ── Create ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create') {
@@ -96,7 +98,7 @@ if (isset($_GET['edit'])) {
 $role_labels = ['admin' => 'Administrador', 'supervisor' => 'Supervisor', 'empleado' => 'Empleado'];
 $role_label  = $role_labels[$user_role] ?? ucfirst($user_role);
 ?>
-<?php $page_title = 'Noticias'; $extra_css = ['../../public/css/news.css']; include __DIR__ . '/../components/header.php'; ?>
+<?php $page_title = 'Noticias'; $extra_css = ['../../public/css/news.css']; include __DIR__ . '/../components/head.php'; ?>
 <body>
 
   <!-- ── Sidebar ── -->
